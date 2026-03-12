@@ -1,0 +1,22 @@
+{
+  "name": "app-exosquelette-crr",
+  "version": "1.0.0",
+  "description": "Outil de suivi lors de l'utilisation d'exosquelettes dans le cadre de la réadaptation professionel",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "ch.crrsion.exosquelettes",
+    "productName": "Suivi Exosquelettes CRR",
+    "win": {
+      "target": "dir",
+      "icon": "logo.ico"
+    }
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
+  }
+}

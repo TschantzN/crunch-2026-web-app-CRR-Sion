@@ -1,0 +1,112 @@
+{
+  "sessions": {
+    "session_1": {
+      "id": "session_1",
+      "date": "2026-03-10",
+      "time": "08:00",
+      "dayTimeLabel": "Mar 10/3 - 8h00",
+      "patient": "test",
+      "msp": "Dr. Martin",
+      "atelier": "Atelier",
+      "title": "test - Atelier (08:00)",
+      "status": "done-good",
+      "exoModel": "Skelex 360 (Bras en l'air)",
+      "confort": "8",
+      "fatigue": "Faible",
+      "feedbackText": "huisiuhfs",
+      "durationBlocks": 2
+    },
+    "session_2": {
+      "id": "session_2",
+      "date": "2026-03-11",
+      "time": "08:30",
+      "dayTimeLabel": "Mer 11/3 - 8h30",
+      "patient": "test",
+      "msp": "Dr. Martin",
+      "atelier": "Atelier",
+      "title": "test - Atelier (08:30)",
+      "status": "done-warn",
+      "exoModel": "Cray X (Lombaires)",
+      "confort": "5",
+      "fatigue": "Modérée",
+      "feedbackText": "",
+      "durationBlocks": 3,
+      "exercises": []
+    },
+    "session_3": {
+      "id": "session_3",
+      "date": "2026-03-12",
+      "time": "08:30",
+      "dayTimeLabel": "Jeu 12/3 - 8h30",
+      "patient": "test",
+      "msp": "Dr. Martin",
+      "atelier": "Atelier",
+      "title": "test - Atelier (08:30)",
+      "status": "planned",
+      "exoModel": "Cray X (Lombaires)",
+      "confort": 5,
+      "fatigue": "Modérée",
+      "feedbackText": "",
+      "durationBlocks": 4
+    },
+    "session_4": {
+      "id": "session_4",
+      "date": "2026-03-13",
+      "time": "10:00",
+      "dayTimeLabel": "Ven 13/3 - 10h00",
+      "patient": "mr.deux",
+      "msp": "un autre msp",
+      "atelier": "test d'activité",
+      "title": "mr.deux - test d'activité (10:00)",
+      "status": "planned",
+      "exoModel": "Cray X (Lombaires)",
+      "confort": "3",
+      "fatigue": "Faible",
+      "feedbackText": "",
+      "durationBlocks": 2
+    },
+    "session_5": {
+      "id": "session_5",
+      "date": "2026-03-11",
+      "time": "12:30",
+      "dayTimeLabel": "Mer 11/3 - 12h30",
+      "patient": "encore un autre",
+      "msp": "un autre msp2",
+      "atelier": "super tache",
+      "title": "encore un autre - super tache (12h30)",
+      "status": "planned",
+      "exoModel": "Cray X (Lombaires)",
+      "confort": "5",
+      "fatigue": "Modérée",
+      "feedbackText": "",
+      "durationBlocks": 4,
+      "exercises": [
+        {
+          "name": "lever",
+          "hasWeight": true,
+          "weight": 10,
+          "hasTime": false,
+          "time": 0
+        }
+      ]
+    },
+    "session_8": {
+      "id": "session_8",
+      "date": "2026-03-13",
+      "time": "12:00",
+      "dayTimeLabel": "Ven 13/3 - 12h00",
+      "patient": "encore un autre",
+      "msp": "Dr. Martin",
+      "atelier": "Atelier",
+      "title": "encore un autre - Atelier (12h00)",
+      "status": "planned",
+      "exoModel": "Cray X (Lombaires)",
+      "confort": "5",
+      "fatigue": "Modérée",
+      "feedbackText": "",
+      "exercises": [],
+      "durationBlocks": 1
+    }
+  },
+  "counter": 9
+}

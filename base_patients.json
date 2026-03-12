@@ -1,0 +1,21 @@
+{
+  "sessions": {
+    "session_1": {
+      "id": "session_1",
+      "date": "2026-03-10",
+      "time": "08:00",
+      "dayTimeLabel": "Mar 10/3 - 8h00",
+      "patient": "gfhfhfz",
+      "msp": "Dr. Martin",
+      "atelier": "Atelier",
+      "title": "gfhfhfz - Atelier (8h00)",
+      "status": "planned",
+      "exoModel": "Cray X (Lombaires)",
+      "confort": "5",
+      "fatigue": "Modérée",
+      "feedbackText": "",
+      "durationBlocks": 1
+    }
+  },
+  "counter": 2
+}

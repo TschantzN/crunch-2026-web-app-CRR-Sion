@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord - CRR-Sion | Exosquelettes</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./chart.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <img src="logo.png" alt="Logo CRR-Sion" class="logo-img">
+            <h1>Suivi de Réadaptation Exosquelette</h1>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="flex-panel">
+            <div class="calendar-header-container">
+                <h2>Planning de la semaine</h2>
+                <div class="date-controls">
+                    <button onclick="changeWeek(-1)">◀</button>
+                    <input type="date" id="weekSelector" onchange="jumpToDate(this.value)">
+                    <button onclick="changeWeek(1)">▶</button>
+                </div>
+            </div>
+            
+            <div class="calendar-wrapper">
+                <div class="weekly-grid" id="calendarGrid">
+                    <div class="grid-header">Heure</div>
+                    <div class="grid-header" id="h-mon">Lun</div>
+                    <div class="grid-header" id="h-tue">Mar</div>
+                    <div class="grid-header" id="h-wed">Mer</div>
+                    <div class="grid-header" id="h-thu">Jeu</div>
+                    <div class="grid-header" id="h-fri">Ven</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel" id="feedbackPanel">
+            <div class="tabs">
+                <button class="tab-btn active" id="btnTabCurrent" onclick="switchTab('current')">Séance Actuelle</button>
+                <button class="tab-btn" id="btnTabHistory" onclick="switchTab('history')">Historique Patient</button>
+            </div>
+            
+            <div id="tab-current">
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5px;">
+                        <label style="margin: 0;">Séance sélectionnée :</label>
+                        <div id="session-actions" style="display: none; gap: 5px;">
+                            <button class="btn-small-edit" onclick="editCurrentSession()" title="Modifier les infos (Patient, Durée...)">✏️ Modifier</button>
+                            <button class="btn-small-delete" onclick="deleteCurrentSession()" title="Effacer définitivement">🗑️ Supprimer</button>
+                        </div>
+                    </div>
+                    <div id="selectedSession" style="background: #e9e9e9; padding: 10px; font-weight: bold; color: var(--primary); border-radius: 4px; border: 1px solid #ccc;">
+                        Sélectionnez une séance dans l'agenda
+                    </div>
+                </div>
+
+                <div id="formControls" style="display: none;">
+                    <div style="display: flex; gap: 10px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label>Statut :</label>
+                            <select id="sessionStatus" style="font-weight: bold;">
+                                <option value="planned">🟦 Planifié</option>
+                                <option value="done-good">🟩 Succès</option>
+                                <option value="done-warn">🟧 Ajustement</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label>MSP Responsable :</label>
+                            <input type="text" id="edit-msp" list="mspList" placeholder="Changer de MSP">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Douleur globale ressenti par le patient (1 = aucune, 10 = Insupportable)</label>
+                        <input type="range" id="confort" min="1" max="10" value="5" oninput="document.getElementById('confort-val').innerText = this.value">
+                        <div class="range-value"><span id="confort-val">5</span> / 10</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Fatigue globale ressentie</label>
+                        <div class="radio-group">
+                            <input type="radio" id="fatigue-faible" name="fatigue" value="Faible"><label for="fatigue-faible">Faible</label>
+                            <input type="radio" id="fatigue-moderee" name="fatigue" value="Modérée" checked><label for="fatigue-moderee">Modérée</label>
+                            <input type="radio" id="fatigue-forte" name="fatigue" value="Forte"><label for="fatigue-forte">Forte</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="background: #fdfdfd; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
+                            <label style="margin:0; color:var(--primary);">Exercices Spécifiques</label>
+                            
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <select id="quickAddExo" onchange="addExistingExercise(this.value); this.value='';" style="padding: 4px; font-size: 0.8rem; border: 1px solid #ccc; border-radius: 4px; max-width: 170px;">
+                                    <option value="">+ Copier l'historique...</option>
+                                </select>
+                                <button type="button" class="btn-small-edit" onclick="addExerciseField()">+ Nouveau</button>
+                            </div>
+                        </div>
+                        <div id="exercisesContainer">
+                            </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Observations MSP & Feedback patient</label>
+                        <textarea id="feedbackText" placeholder="Notes sur les réglages et le ressenti..."></textarea>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-pdf" onclick="generatePreviewPDF()">📄 Aperçu PDF (Séance)</button>
+                        <button class="btn-save" onclick="saveFeedback()">💾 Mettre à jour</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-history" style="display: none;">
+                <div class="form-group">
+                    <label>Filtrer par patient :</label>
+                    <select id="patientFilter" onchange="filterHistoryByDropdown()">
+                        <option value="all">-- Tous les patients --</option>
+                    </select>
+                </div>
+                <div id="historyList"><p style="color: var(--text-light); font-style: italic;">Sélectionnez un patient.</p></div>
+            </div>
+            
+            <button id="btnShowTree" class="btn-toggle-tree" onclick="toggleTree()">Voir le parcours complet du patient</button>
+        </div>
+    </div>
+
+    <div class="tree-container" id="patientTreeContainer">
+        <h2 class="tree-title">
+            <span id="treePatientName">Parcours de réadaptation</span>
+            <div>
+                <button onclick="exportPatientJourneyPDF()" class="btn-pdf" style="padding: 5px 15px; margin-right: 15px;">📄 Exporter Parcours PDF</button>
+                <button onclick="toggleTree()" style="background:none; border:none; color:var(--text-light); cursor:pointer; font-weight:bold;">✖ Fermer</button>
+            </div>
+        </h2>
+        
+        <div style="display: flex; gap: 20px;">
+            <div class="timeline" id="patientTimeline" style="flex: 2;"></div>
+            <div id="chartsContainer" style="flex: 3; border-left: 2px solid #eee; padding-left: 20px; display:flex; flex-direction:column; gap:20px; max-height: 500px; overflow-y:auto;">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="sessionModal">
+        <div class="modal-content">
+            <h3 id="modal-title">Ajouter une séance</h3>
+            <label>Date et Heure :</label>
+            <input type="text" id="m-datetime" disabled style="background:#eee; font-weight:bold; color:var(--primary);">
+            
+            <label>Nom du patient :</label>
+            <input type="text" id="m-patient" list="patientList" placeholder="Sélectionner ou taper un nom">
+            <datalist id="patientList"></datalist>
+
+            <label>MSP Assigné :</label>
+            <input type="text" id="m-msp" list="mspList" placeholder="Sélectionner ou taper un nom">
+            <datalist id="mspList"></datalist>
+            
+            <label>Atelier / Activité (Général) :</label>
+            <input type="text" id="m-atelier" placeholder="Ex: Menuiserie, Levage...">
+            
+            <label>Durée :</label>
+            <select id="m-duree"><option value="1">30 minutes</option><option value="2">1 heure</option><option value="3">1 heure 30</option><option value="4">2 heures</option></select>
+
+            <label>Statut initial :</label>
+            <select id="m-couleur"><option value="planned">Planifié (Bleu)</option><option value="done-good">Terminé - Succès (Vert)</option><option value="done-warn">Terminé - Ajustement requis (Orange)</option></select>
+
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeModal()">Annuler</button>
+                <button class="btn-confirm" onclick="saveModalSession()">Valider</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./renderer.js"></script>
+</body>
+</html>
