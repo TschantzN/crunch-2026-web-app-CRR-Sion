@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brochure Multilingue</title>
+    <style>
+        :root {
+            --primary: #059669; /* Vert élégant */
+            --bg: #f3f4f6;
+            --text: #111827;
+        }
+        body { 
+            font-family: -apple-system, system-ui, sans-serif; 
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+        }
+        h2 { margin-bottom: 2rem; font-size: 1.5rem; }
+        select { 
+            width: 100%; 
+            padding: 15px; 
+            margin-bottom: 2rem; 
+            border-radius: 0.75rem; 
+            border: 2px solid #e5e7eb; 
+            font-size: 1.1rem;
+            appearance: none; /* Évite les styles par défaut moches sur mobile */
+            background: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 15px center/15px;
+        }
+        button { 
+            width: 100%;
+            padding: 16px; 
+            background-color: var(--primary); 
+            color: white; 
+            border: none; 
+            border-radius: 0.75rem;
+            font-weight: bold; 
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+        button:active { transform: scale(0.96); background-color: #047857; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2 id="ui-title">Choisissez votre langue</h2>
+    
+    <select id="lang" onchange="updateUI()">
+        <option value="fr">Français</option>
+        <option value="en">English</option>
+        <option value="pt">Português</option>
+        <option value="sq">Shqip</option>
+    </select>
+
+    <button onclick="ouvrirBrochure()" id="ui-btn">Lire la brochure</button>
+</div>
+
+<script>
+    const translations = {
+        fr: { title: "Votre Brochure", btn: "Ouvrir le PDF" },
+        en: { title: "Your Brochure", btn: "Open PDF" },
+        pt: { title: "Sua Brochura", btn: "Abrir PDF" },
+        sq: { title: "Broshura juaj", btn: "Hap PDF-në" }
+    };
+
+    function updateUI() {
+        const lang = document.getElementById('lang').value;
+        document.getElementById('ui-title').innerText = translations[lang].title;
+        document.getElementById('ui-btn').innerText = translations[lang].btn;
+    }
+
+function ouvrirBrochure() {
+    const lang = document.getElementById('lang').value;
+    const baseFolder = "brochures/"; // Chemin relatif au fichier index.html
+    const fileExtension = ".pdf"; 
+    window.location.href = baseFolder + lang + fileExtension;
+}
+
+    // Lancer la traduction au démarrage
+    updateUI();
+</script>
+
+</body>
+</html>

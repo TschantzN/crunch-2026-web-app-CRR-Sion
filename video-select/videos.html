@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vidéos de Rééducation</title>
+    <style>
+        :root {
+            --primary: #ef4444; /* Rouge YouTube */
+            --bg: #f9fafb;
+            --text: #111827;
+        }
+        body { 
+            font-family: -apple-system, system-ui, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            padding: 20px; 
+            box-sizing: border-box;
+        }
+        .card { 
+            background: white; 
+            padding: 2.5rem; 
+            border-radius: 1.5rem; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            width: 100%; 
+            max-width: 400px; 
+            text-align: center; 
+        }
+        h2 { margin-bottom: 1.5rem; color: var(--primary); font-size: 1.5rem; }
+        label { display: block; text-align: left; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: #4b5563; }
+        select { 
+            width: 100%; 
+            padding: 14px; 
+            margin-bottom: 1.5rem; 
+            border-radius: 0.8rem; 
+            border: 2px solid #e5e7eb; 
+            font-size: 1.1rem; 
+            background-color: white;
+        }
+        button { 
+            width: 100%; 
+            padding: 18px; 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            border-radius: 0.8rem; 
+            font-weight: bold; 
+            font-size: 1.1rem; 
+            cursor: pointer; 
+            transition: transform 0.2s, background 0.2s;
+        }
+        button:active { transform: scale(0.96); opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2 id="ui-title">Vidéos de Rééducation</h2>
+    
+    <label id="ui-label-lang" for="lang">Langue / Language</label>
+    <select id="lang" onchange="updateUI()">
+        <option value="fr">Français</option>
+        <option value="en">English</option>
+        <option value="pt">Português</option>
+        <option value="sq">Shqip (Albanais)</option>
+    </select>
+
+    <label id="ui-label-zone" for="zone">Zone du corps</label>
+    <select id="zone">
+        <option value="genou" id="opt-genou">Genou</option>
+        <option value="epaule" id="opt-epaule">Épaule</option>
+    </select>
+
+    <button onclick="lireVideo()" id="ui-btn">Regarder la vidéo</button>
+</div>
+
+<script>
+    /** * CONFIGURATION : Remplace les ID ci-dessous par les vrais ID de tes vidéos YouTube 
+     * L'ID est la partie après "v=" dans l'URL. Exemple : youtube.com/watch?v=dQw4w9WgXcQ -> ID = dQw4w9WgXcQ
+     */
+    const videoIds = {
+        genou: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1",
+        epaule: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1"
+    };
+
+    /**
+     * TRADUCTIONS DE L'INTERFACE
+     */
+    const uiText = {
+        fr: { 
+            title: "Vidéos de Rééducation", 
+            lang: "Choisir la langue", 
+            zone: "Zone du corps", 
+            genou: "Genou", 
+            epaule: "Épaule", 
+            btn: "Regarder la vidéo" 
+        },
+        en: { 
+            title: "Rehab Videos", 
+            lang: "Choose language", 
+            zone: "Body Zone", 
+            genou: "Knee", 
+            epaule: "Shoulder", 
+            btn: "Watch Video" 
+        },
+        pt: { 
+            title: "Vídeos de Reabilitação", 
+            lang: "Escolher idioma", 
+            zone: "Zona do corpo", 
+            genou: "Joelho", 
+            epaule: "Ombro", 
+            btn: "Assistir ao vídeo" 
+        },
+        sq: { 
+            title: "Video të Reabilitimit", 
+            lang: "Zgjidhni gjuhën", 
+            zone: "Zona e trupit", 
+            genou: "Gjuri", 
+            epaule: "Shpatulla", 
+            btn: "Shiko videon" 
+        }
+    };
+
+    // Met à jour les textes de la page dès qu'on change la langue
+    function updateUI() {
+        const l = document.getElementById('lang').value;
+        const text = uiText[l];
+
+        document.getElementById('ui-title').innerText = text.title;
+        document.getElementById('ui-label-lang').innerText = text.lang;
+        document.getElementById('ui-label-zone').innerText = text.zone;
+        document.getElementById('opt-genou').innerText = text.genou;
+        document.getElementById('opt-epaule').innerText = text.epaule;
+        document.getElementById('ui-btn').innerText = text.btn;
+    }
+
+    // Redirige vers YouTube avec les paramètres de sous-titres
+    function lireVideo() {
+        const lang = document.getElementById('lang').value;
+        const zone = document.getElementById('zone').value;
+        const videoId = videoIds[zone];
+
+        if (videoId === "TON_ID_VIDEO_GENOU" || videoId === "") {
+            alert("Erreur : Les IDs YouTube ne sont pas encore configurés dans le code.");
+            return;
+        }
+
+        // Construction de l'URL avec paramètres :
+        // cc_load_policy=1 (force l'affichage des CC)
+        // cc_lang_pref (préférence de langue pour les CC)
+        // hl (langue de l'interface YouTube)
+        const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}&cc_load_policy=1&cc_lang_pref=${lang}&hl=${lang}`;
+        
+        window.location.href = youtubeUrl;
+    }
+
+    // Initialisation au chargement de la page
+    window.onload = updateUI;
+</script>
+
+</body>
+</html>
