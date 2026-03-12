@@ -262,9 +262,9 @@ function addExerciseField(name = "", exoModel = "Aucun", assistance = 5, hasWeig
                 <label style="font-size: 0.75rem; color: var(--primary); margin-bottom: 2px; display:block; font-weight:bold;">Exosquelette</label>
                 <select class="ex-model" style="padding: 4px; font-size: 0.8rem; width:100%; border: 1px solid #ccc; border-radius: 4px;">
                     <option value="Aucun" ${exoModel === 'Aucun' ? 'selected' : ''}>Aucun (Sans exo)</option>
-                    <option value="Cray X (Lombaires)" ${exoModel === 'Cray X (Lombaires)' ? 'selected' : ''}>Cray X (Lombaires)</option>
-                    <option value="Skelex 360 (Bras)" ${exoModel === 'Skelex 360 (Bras)' ? 'selected' : ''}>Skelex 360 (Bras)</option>
-                    <option value="Japétus (Dos)" ${exoModel === 'Japétus (Dos)' ? 'selected' : ''}>Japétus (Dos)</option>
+                    <option value="Uplift (total)" ${exoModel === 'Uplift (total)' ? 'selected' : ''}>Uplift (total)</option>
+                    <option value="Mate XT go (sup)" ${exoModel === 'Mate XT go (sup)' ? 'selected' : ''}>Mate XT go (sup)</option>
+                    <option value="dnsys Z1 (inf)" ${exoModel === 'dnsys Z1 (inf)' ? 'selected' : ''}>dnsys Z1 (inf)</option>
                 </select>
             </div>
             <div style="flex: 1;">
