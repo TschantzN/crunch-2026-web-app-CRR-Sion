@@ -74,3 +74,9 @@ Le résultat final se trouvera dans le dossier **`dist/win-unpacked`**. C'est ce
 * `renderer.js` : La logique applicative (gestion du calendrier, interactions, calcul des graphiques).
 * `chart.js` : La librairie externe (téléchargée en local) pour tracer les graphiques hors-ligne.
 * `logo.png` / `logo.ico` : Ressources visuelles de l'application.
+
+
+## Crédits
+- La webapp a été développer par Tschantz Nathan. 
+- Les brochures on été designée et créées par Vecerina Luka.
+- Les pages de séléction (vidéo et brochure) par Melvi Isha
